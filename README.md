@@ -64,7 +64,7 @@ Signed, notarized releases come from the Xcode project.
 
 Toggle **Compact display** in Settings to switch between:
 
-- **Compact (default):** two vertical bars — left = 5h session, right = 7d weekly — each filling bottom-up with usage. Rendered as a template image, so they take the menu bar's color like any native item.
+- **Compact (default):** speedometer icon + `5H 86% · W 41%` — 5h session and weekly usage inline
 - **Normal:** icon + `71%` — weekly usage only, colored by threshold
 
 ## How it works

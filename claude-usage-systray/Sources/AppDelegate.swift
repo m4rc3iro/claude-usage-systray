@@ -130,9 +130,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let weekUsage = snapshot.sevenDayUtilization
 
         if settingsManager.settings.compactDisplay {
-            button.attributedTitle = NSAttributedString(string: "")
-            button.image = barsImage(fiveHour: snapshot.fiveHourUtilization,
-                                     sevenDay: snapshot.sevenDayUtilization)
+            let fiveH = snapshot.fiveHourUtilization
+            let sevenD = snapshot.sevenDayUtilization
+            let font = NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .medium)
+
+            let str = NSAttributedString(
+                string: "5H \(fiveH)% · W \(sevenD)%",
+                attributes: [.font: font, .foregroundColor: NSColor.labelColor]
+            )
+
+            let config = NSImage.SymbolConfiguration(pointSize: 14, weight: .medium)
+            button.image = NSImage(systemSymbolName: "speedometer", accessibilityDescription: "Claude Usage")?
+                .withSymbolConfiguration(config)
+            button.imagePosition = .imageLeading
+            button.attributedTitle = str
         } else {
             let config = NSImage.SymbolConfiguration(pointSize: 12, weight: .medium)
             let symbolName: String
@@ -150,42 +161,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 ]
             )
         }
-    }
-
-    /// Draws two vertical bars (left = 5h, right = 7d) that fill bottom-up with usage.
-    /// Returned as a template image so the menu bar tints it like any native item.
-    private func barsImage(fiveHour: Int, sevenDay: Int) -> NSImage {
-        let barWidth: CGFloat = 7
-        let gap: CGFloat = 4
-        let barHeight: CGFloat = 14
-        let vPad: CGFloat = 1
-        let cornerRadius: CGFloat = barWidth / 2
-
-        let size = NSSize(width: barWidth * 2 + gap, height: barHeight + vPad * 2)
-        let image = NSImage(size: size)
-        image.lockFocus()
-
-        let utilizations = [fiveHour, sevenDay]
-        for (index, utilization) in utilizations.enumerated() {
-            let x = CGFloat(index) * (barWidth + gap)
-
-            // Track (unfilled): faint outline of the full bar.
-            let trackRect = NSRect(x: x, y: vPad, width: barWidth, height: barHeight)
-            NSColor.black.withAlphaComponent(0.25).setFill()
-            NSBezierPath(roundedRect: trackRect, xRadius: cornerRadius, yRadius: cornerRadius).fill()
-
-            // Fill: solid, growing from the bottom.
-            let fillHeight = barFillHeight(utilization: utilization, maxHeight: barHeight)
-            if fillHeight > 0 {
-                let fillRect = NSRect(x: x, y: vPad, width: barWidth, height: fillHeight)
-                NSColor.black.setFill()
-                NSBezierPath(roundedRect: fillRect, xRadius: cornerRadius, yRadius: cornerRadius).fill()
-            }
-        }
-
-        image.unlockFocus()
-        image.isTemplate = true
-        return image
     }
 
     private func usageColor(for percentage: Int) -> NSColor {
