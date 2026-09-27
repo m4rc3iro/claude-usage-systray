@@ -45,12 +45,27 @@ open ~/Library/Developer/Xcode/DerivedData/ClaudeUsageSystray-*/Build/Products/R
 
 Or open `ClaudeUsageSystray.xcodeproj` in Xcode and run with ⌘R.
 
+### Without Xcode
+
+With only the Command Line Tools installed, build via Swift Package Manager:
+
+```bash
+cd claude-usage-systray/claude-usage-systray
+./build-app.sh          # -> ClaudeUsageSystray.app
+open ClaudeUsageSystray.app
+```
+
+`build-app.sh` runs `swift build` and wraps the binary in a minimal `.app`
+bundle (needed so notifications work and the Dock icon stays hidden). Note that
+`swift test` still requires full Xcode, which ships the `XCTest` framework.
+Signed, notarized releases come from the Xcode project.
+
 ## Display modes
 
 Toggle **Compact display** in Settings to switch between:
 
-- **Compact (default):** `35% · 71%` — both 5h and 7d inline, each colored by threshold
-- **Normal:** icon + `71%` — weekly usage only
+- **Compact (default):** two vertical bars — left = 5h session, right = 7d weekly — each filling bottom-up with usage. Rendered as a template image, so they take the menu bar's color like any native item.
+- **Normal:** icon + `71%` — weekly usage only, colored by threshold
 
 ## How it works
 

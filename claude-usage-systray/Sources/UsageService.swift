@@ -67,6 +67,13 @@ func calculateUtilization(tokens: Int, limit: Int) -> Int {
     return min(100, tokens * 100 / limit)
 }
 
+/// Returns the filled height of a usage bar given utilization (0–100) and the bar's max height.
+/// Utilization is clamped to the 0–100 range.
+func barFillHeight(utilization: Int, maxHeight: CGFloat) -> CGFloat {
+    let clamped = max(0, min(100, utilization))
+    return maxHeight * CGFloat(clamped) / 100
+}
+
 /// Formats a future date as a human-readable countdown string.
 func formatTimeRemaining(until date: Date, from now: Date = Date()) -> String {
     let interval = date.timeIntervalSince(now)

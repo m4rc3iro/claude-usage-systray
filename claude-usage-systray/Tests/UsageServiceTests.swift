@@ -116,6 +116,31 @@ final class CalculateUtilizationTests: XCTestCase {
     }
 }
 
+// MARK: - barFillHeight
+
+final class BarFillHeightTests: XCTestCase {
+
+    func testZeroUtilizationIsEmpty() {
+        XCTAssertEqual(barFillHeight(utilization: 0, maxHeight: 14), 0)
+    }
+
+    func testFullUtilizationFillsMaxHeight() {
+        XCTAssertEqual(barFillHeight(utilization: 100, maxHeight: 14), 14)
+    }
+
+    func testHalfUtilizationFillsHalf() {
+        XCTAssertEqual(barFillHeight(utilization: 50, maxHeight: 14), 7)
+    }
+
+    func testExceedingHundredCapsAtMaxHeight() {
+        XCTAssertEqual(barFillHeight(utilization: 150, maxHeight: 14), 14)
+    }
+
+    func testNegativeUtilizationClampsToZero() {
+        XCTAssertEqual(barFillHeight(utilization: -10, maxHeight: 14), 0)
+    }
+}
+
 // MARK: - formatTimeRemaining
 
 final class FormatTimeRemainingTests: XCTestCase {
