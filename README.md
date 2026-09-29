@@ -2,7 +2,7 @@
 
 A lightweight macOS menu bar app that shows your [Claude.ai](https://claude.ai) plan usage in real time — current session and weekly limits — without opening a browser.
 
-![Claude Usage Systray](claude-usage-systray/Resources/Assets.xcassets/Image.imageset/Image.png)
+![Claude Usage Systray](Resources/Assets.xcassets/Image.imageset/Image.png)
 
 ## What it shows
 
@@ -38,7 +38,7 @@ Download the latest `ClaudeUsageSystray.zip` from the [Releases page](https://gi
 
 ```bash
 git clone https://github.com/adntgv/claude-usage-systray
-cd claude-usage-systray/claude-usage-systray
+cd claude-usage-systray
 xcodebuild -scheme ClaudeUsageSystray -configuration Release build
 open ~/Library/Developer/Xcode/DerivedData/ClaudeUsageSystray-*/Build/Products/Release/ClaudeUsageSystray.app
 ```
@@ -50,7 +50,7 @@ Or open `ClaudeUsageSystray.xcodeproj` in Xcode and run with ⌘R.
 With only the Command Line Tools installed, build via Swift Package Manager:
 
 ```bash
-cd claude-usage-systray/claude-usage-systray
+cd claude-usage-systray
 ./build-app.sh          # -> ClaudeUsageSystray.app
 open ClaudeUsageSystray.app
 ```
